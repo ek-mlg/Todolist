@@ -29,7 +29,7 @@ function App() {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
 
-    const changeFilter= (filter: FilterValuesType) => {
+    const changeTodolistFilter = (filter: FilterValuesType) => {
         setFilter(filter)
     }
 
@@ -41,6 +41,11 @@ function App() {
         }
         setTasks([newTask, ...tasks]) //new Array()
     }
+
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: !t.isDone}: t))
+    }
+
 
     const  getFilteredTasksForRender = () => {
         switch (filter) {
@@ -62,8 +67,11 @@ function App() {
                     addTask={addTask}
                     removeTask={removeTask}
                     title={todoListTitle}
-                    changeFilter={changeFilter}
-                    tasks={filteredTasksForRender}/>
+                    changeTodolistFilter={changeTodolistFilter}
+                    tasks={filteredTasksForRender}
+                    filter={filter}
+                    changeTaskStatus={changeTaskStatus}
+                />
             </div>
         </div>
     );
