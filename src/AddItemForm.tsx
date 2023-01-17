@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 type PropsType = {
     callBack: (title: string)=> void
@@ -30,15 +32,32 @@ const AddItemForm = (props: PropsType) => {
         }
     }
 
+    const buttonStyles = {
+        maxWidth: '40px',
+        maxHeight: '40px',
+        minWidth: '40px',
+        minHeight: '40px',
+    }
+
     return (
         <div>
-            <input value={title}
+            <TextField
+                id="outlined-basic"
+                label={error ? "Title is required" : "Please enter"}
+                variant="outlined"
+                value={title}
+                onChange={onChangeHandler}
+                onKeyPress={onKeyPressHandler}
+                size={"small"}
+                error={!!error}
+            />
+           {/* <input value={title}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
                    className={error ? "error" : ""}
-            />
-            <button onClick={addTask}>+</button>
-            {error && <div className="error-message">{error}</div>}
+            />*/}
+
+            <Button variant="contained" onClick={addTask} style={buttonStyles}>+</Button>
         </div>
     );
 };
