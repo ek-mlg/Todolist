@@ -44,7 +44,6 @@ export const loginTC = (data: ValuesType) => (dispatch: Dispatch<ActionsType>) =
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })
-
 }
 
 export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
@@ -64,8 +63,24 @@ export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
         .finally(() => {
             dispatch(setIsInitializedAC(true))
         })
-
 }
+
+export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
+}
+
 
 // types
 type ActionsType =
